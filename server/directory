@@ -1,0 +1,17 @@
+server/
+│
+├── config/
+├── controller/
+├── middleware/
+├── model/
+├── node_modules/
+├── router/
+├── uploads/
+├── utils/
+│
+├── .env
+├── .gitignore
+├── app.js
+├── package-lock.json
+├── package.json
+└── server.js
