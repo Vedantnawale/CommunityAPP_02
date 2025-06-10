@@ -59,7 +59,9 @@ const Developers = () => {
 
         {/* Developer Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredDevelopers.map((dev) => (
+          {filteredDevelopers
+          .filter((dev) => dev.role !== "Admin")
+          .map((dev) => (
             <div key={dev._id} className="bg-white rounded-xl shadow-md p-4">
               <img
                 src={

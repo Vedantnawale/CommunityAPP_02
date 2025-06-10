@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import NotFound from '../pages/NotFound'
 import useIsAdmin from '../helpers/checkRole'
 import EditPost from '../pages/EditPost'
+import NotLogin from '../component/NotLogin'
 
 const CustomRoutes = () => {
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
@@ -18,6 +19,7 @@ const CustomRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/firstpage" element={<NotLogin />} />
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 

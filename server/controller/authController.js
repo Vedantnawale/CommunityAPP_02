@@ -18,7 +18,7 @@ const { default: AppError } = require("../utilis/error.util");
 
 
 exports.signup = async (req, res, next) => {
-    const { fullName, email, password, role } = req.body;
+    const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
         return next(new AppError('All fields are required', 400)); // isko capture karo or aage bhej do
@@ -34,7 +34,6 @@ exports.signup = async (req, res, next) => {
         fullName,
         email,
         password,
-        role
     })
 
     if (!user) {

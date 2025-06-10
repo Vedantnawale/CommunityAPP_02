@@ -7,6 +7,8 @@ import Footer from '../component/Footer';
 import useIsAdmin from '../helpers/checkRole';
 
 import adminImage from '../assets/admin_home.png'
+import MostLikedAndCommented from './MostLikedAndCommented';
+import HomeLeft from '../component/HomeLeft';
 
 const HomePage = () => {
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
@@ -58,14 +60,60 @@ const HomePage = () => {
                 </div>
               </aside>
             </div>
-          </div>
-          <div>
-            <Footer />
-          </div>
+            {
+              !isAdmin && <MostLikedAndCommented />
+            }
 
+          </div>
+          <Footer />
         </div>
       ) : (
-        <NotLogin />
+        <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
+          <Header />
+
+          {/* Main content grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+
+            {/* Left column */}
+            <div className="md:col-span-2">
+              <HomeLeft />
+            </div>
+
+            {/* Right sidebar */}
+            <aside className="space-y-6">
+              <div className="bg-white rounded-xl shadow p-4">
+                <h2 className="font-bold text-lg mb-2">📈 Trending Tags</h2>
+                <div className="flex flex-wrap gap-2">
+                  {['React', 'TypeScript', 'Node.js', 'Python', 'JavaScript'].map(tag => (
+                    <span key={tag} className="bg-gray-200 text-sm px-3 py-1 rounded-full">{tag}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow p-4">
+                <h2 className="font-bold text-lg mb-2">📊 Community Stats</h2>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>Total Developers</span><span className="font-bold">1,234</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Posts Today</span><span className="font-bold">42</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Active Now</span><span className="font-bold">89</span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          {/* Most liked section */}
+          <MostLikedAndCommented />
+
+          {/* Footer */}
+          <Footer />
+        </div>
+
       )}
     </>
   );

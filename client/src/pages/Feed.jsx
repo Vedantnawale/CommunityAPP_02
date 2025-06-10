@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 const Feed = () => {
   const dispatch = useDispatch();
   const { postData } = useSelector((state) => state.posts);
+  console.log(postData)
   const user = JSON.parse(localStorage.getItem("data"));
   //console.log(user);
   const [commentInputs, setCommentInputs] = useState({});
@@ -37,7 +38,9 @@ const Feed = () => {
       <Header />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {postData?.length > 0 ? (
-          postData.map((post) => {
+          [...postData]
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .map((post) => {
             const isLiked = post.likes.includes(user._id);
             return (
               <div key={post._id} className="bg-white rounded-xl shadow p-4 space-y-2">

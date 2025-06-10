@@ -16,7 +16,7 @@ const Signup = () => {
     email: "",
     password: "",
     avatar: "",
-    role: ""
+    // role: ""
   });
 
   function handleUserInput(e) {
@@ -47,7 +47,7 @@ const Signup = () => {
     formData.append("fullName", signupData.fullName);
     formData.append("email", signupData.email);
     formData.append("password", signupData.password);
-    formData.append("role", signupData.role);
+    // formData.append("role", signupData.role);
 
     // dispatch create account action
     const response = await dispatch(createAccount(formData))
@@ -60,7 +60,7 @@ const Signup = () => {
       fullName: "",
       email: "",
       password: "",
-      role: ""
+      // role: ""
     });
 
     console.log(signupData.role);
@@ -118,7 +118,7 @@ const Signup = () => {
               className="w-full px-4 py-2 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
             />
           </div>
-          <div>
+          {/* <div>
             <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-white mt-4">
               Select Role
             </label>
@@ -133,7 +133,7 @@ const Signup = () => {
               <option value="User">User</option>
               <option value="Admin">Admin</option>
             </select>
-          </div>
+          </div> */}
 
           <div className="flex items-start">
             <input

@@ -52,9 +52,13 @@ const CreatePost = () => {
           value={tags}
           onChange={(e) => setTags(e.target.value)}
         />
-        <button onClick={handlePost} className="bg-gray-400 text-white px-6 py-1 rounded">
+        <button
+          onClick={handlePost}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+        >
           Post
         </button>
+
       </div>
     </div>
   );

@@ -3,12 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { getUserData, updateProfile } from '../redux/Slices/AuthSlice';
 import toast from 'react-hot-toast';
+import useIsAdmin from '../helpers/checkRole';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state?.auth?.data);
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const isAdmin = useIsAdmin();
 
 
   const [data, setData] = useState({
@@ -102,46 +105,54 @@ const EditProfile = () => {
         />
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Bio</label>
-        <textarea
-          name="bio"
-          id="bio"
-          value={data.bio}
-          onChange={handleInputChange}
-          className="w-full mb-4 px-4 py-2 border rounded-lg"
-          rows={3}
-        />
+              <textarea
+                name="bio"
+                id="bio"
+                value={data.bio}
+                onChange={handleInputChange}
+                className="w-full mb-4 px-4 py-2 border rounded-lg"
+                rows={3}
+              />
 
-        <label className="block mb-2 text-sm font-medium text-gray-700">Skills (comma-separated)</label>
-        <input
-          type="text"
-          name="skills"
-          id="skills"
-          value={data.skills}
-          onChange={handleInputChange}
-          className="w-full mb-4 px-4 py-2 border rounded-lg"
-        />
+        {
+          !isAdmin &&
+          (
+            <>
+              <label className="block mb-2 text-sm font-medium text-gray-700">Skills (comma-separated)</label>
+              <input
+                type="text"
+                name="skills"
+                id="skills"
+                value={data.skills}
+                onChange={handleInputChange}
+                className="w-full mb-4 px-4 py-2 border rounded-lg"
+              />
 
-        <h3 className="text-lg font-semibold mt-4 mb-2">Social Links</h3>
+              <h3 className="text-lg font-semibold mt-4 mb-2">Social Links</h3>
 
-        <label className="block text-sm font-medium text-gray-700">LinkedIn</label>
-        <input
-          type="text"
-          name="linkedin"
-          id="linkedin"
-          value={data.socialLinks.linkedin}
-          onChange={handleInputChange}
-          className="w-full mb-3 px-4 py-2 border rounded-lg"
-        />
+              <label className="block text-sm font-medium text-gray-700">LinkedIn</label>
+              <input
+                type="text"
+                name="linkedin"
+                id="linkedin"
+                value={data.socialLinks.linkedin}
+                onChange={handleInputChange}
+                className="w-full mb-3 px-4 py-2 border rounded-lg"
+              />
 
-        <label className="block text-sm font-medium text-gray-700">GitHub</label>
-        <input
-          type="text"
-          name="github"
-          id="github"
-          value={data.socialLinks.github}
-          onChange={handleInputChange}
-          className="w-full mb-3 px-4 py-2 border rounded-lg"
-        />
+              <label className="block text-sm font-medium text-gray-700">GitHub</label>
+              <input
+                type="text"
+                name="github"
+                id="github"
+                value={data.socialLinks.github}
+                onChange={handleInputChange}
+                className="w-full mb-3 px-4 py-2 border rounded-lg"
+              />
+            </>
+          )
+        }
+
 
         <button
           type="submit"
