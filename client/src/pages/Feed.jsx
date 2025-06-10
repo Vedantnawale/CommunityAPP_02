@@ -131,7 +131,7 @@ const Feed = () => {
                       </>
                     )}
                     {
-                      isAdmin && (
+                      (isAdmin || (user._id === post?.author?._id.toString())) && (
                         <div className="mt-2 space-y-1 text-sm">
                           <div key={post._id} className="flex justify-between items-center bg-gray-100 px-3 py-2 rounded ">
                             <button
@@ -175,7 +175,7 @@ const Feed = () => {
                               <span>
                                 <strong>{comment.user?.fullName || "User"}</strong>: {comment.text}
                               </span>
-                              {user?._id === comment.user?._id && (
+                              {((user?._id === comment.user?._id) || user?._id.toString() === post?.author?._id.toString())&& (
                                 <button
                                   onClick={() => dispatch(deleteComment({ postId: post._id, commentId: comment._id }))}
                                   className="text-red-500 text-xs"

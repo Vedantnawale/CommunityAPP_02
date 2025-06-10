@@ -111,14 +111,14 @@ const HomePage = () => {
                 <h2 className="font-bold text-lg mb-2">📊 Community Stats</h2>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span>Total Developers</span><span className="font-bold">1,234</span>
+                    <span>Total Developers</span><span className="font-bold">{userData.length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Posts Today</span><span className="font-bold">42</span>
+                    <span>Posts Today</span><span className="font-bold">{usersPostedToday.size}</span>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <span>Active Now</span><span className="font-bold">89</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </aside>

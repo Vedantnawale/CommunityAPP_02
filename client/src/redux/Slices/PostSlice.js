@@ -39,7 +39,7 @@ export const getSinglePost = createAsyncThunk("/post/getPost", async (postId) =>
 export const getAllPosts = createAsyncThunk("/post/posts", async (_, thunkAPI) => {
     try {
         const response = await axiosInstance.get("/post/posts");
-        toast.success(response.data.message);
+        //toast.success(response.data.message);
         return response.data.posts;
     } catch (error) {
         toast.error(error?.response?.data?.message || "Failed to fetch posts");

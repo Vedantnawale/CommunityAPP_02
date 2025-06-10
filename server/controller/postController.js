@@ -40,7 +40,7 @@ exports.getAllPosts = async (req, res) => {
         //    console.log(posts);
         res.status(200).json({
             success: true,
-            message: "All Posts Fetch Successfully",
+            //message: "All Posts Fetch Successfully",
             posts
         })
     } catch (error) {
@@ -90,12 +90,6 @@ exports.deletePostByAdmin = async (req, res) => {
             });
         }
 
-        if (user.role !== 'Admin') {
-            return res.status(403).json({
-                success: false,
-                message: "Only admin can delete posts",
-            });
-        }
 
         // Check if post exists
         const post = await Post.findById(postId);
@@ -105,6 +99,19 @@ exports.deletePostByAdmin = async (req, res) => {
                 message: "Post not found",
             });
         }
+
+        console.log("User ID : ", user._id.toString());
+        console.log("Author ID : ", post?.author?._id.toString());
+
+
+        if (user.role !== 'Admin' && user._id.toString() !== post?.author?._id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: "Only admin or the author can delete posts",
+            });
+        }
+
+
 
         console.log("deleted called")
         // Delete the post
@@ -203,8 +210,8 @@ exports.deleteComment = async (req, res) => {
             return res.status(404).json({ success: false, message: "Comment not found" });
         }
 
-        // Allow deletion only by comment owner
-        if (comment.user.toString() !== userId) {
+        // Allow deletion only by comment owner and post owner
+        if ((comment.user.toString() !== userId) && (userId !== post?.author?._id.toString())) {
             return res.status(403).json({ success: false, message: "Unauthorized" });
         }
 
@@ -221,38 +228,38 @@ exports.deleteComment = async (req, res) => {
 };
 
 exports.editPost = async (req, res) => {
-  const { postId } = req.params;
-  const userId = req.user.id;
-  try {
-    const user = await userModel.findById(userId);
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User Not Found" });
+    const { postId } = req.params;
+    const userId = req.user.id;
+    try {
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User Not Found" });
+        }
+
+        const post = await Post.findById(postId).populate("author");
+        if (!post) {
+            return res.status(404).json({ success: false, message: "Post Not Found" });
+        }
+
+        if (post?.author?._id.toString() !== userId) {
+            return res.status(403).json({ success: false, message: "You can't edit this post" });
+        }
+
+        const { content } = req.body;
+        if (content) {
+            post.content = content;
+            post.updatedAt = Date.now();
+        }
+
+        await post.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Post Updated Successfully",
+            post,
+        });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
     }
-
-    const post = await Post.findById(postId).populate("author");
-    if (!post) {
-      return res.status(404).json({ success: false, message: "Post Not Found" });
-    }
-
-    if (post?.author?._id.toString() !== userId) {
-      return res.status(403).json({ success: false, message: "You can't edit this post" });
-    }
-
-    const { content } = req.body;
-    if (content) {
-      post.content = content;
-      post.updatedAt = Date.now(); 
-    }
-
-    await post.save();
-
-    return res.status(200).json({
-      success: true,
-      message: "Post Updated Successfully",
-      post,
-    });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
 };
 

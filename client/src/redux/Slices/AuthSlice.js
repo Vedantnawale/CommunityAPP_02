@@ -110,7 +110,7 @@ export const getAllDevelopers = createAsyncThunk("/auth/developers", async () =>
     try {
         const res = axiosInstance.get("user/developers");
         const result = (await res)?.data?.data;
-        toast.success("Developers Fetch Successfully");
+        //toast.success("Developers Fetch Successfully");
         return result;
     } catch (error) {
         toast.error(error.message)
