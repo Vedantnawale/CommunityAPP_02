@@ -13,6 +13,21 @@ import HomeLeft from '../component/HomeLeft';
 const HomePage = () => {
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
   const isAdmin = useIsAdmin();
+  const userData = useSelector((state) => state.auth.usersData);
+  const {postData} = useSelector((state) => state.posts);
+
+  const allTags = [
+    ... new Set(([...postData] || []).flatMap((post) => post.tags || []))
+  ]
+
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const usersPostedToday = new Set(
+  [...postData]
+    .filter(post => new Date(post.createdAt) >= startOfToday)
+    .map(post => post.author?._id)
+)
 
   return (
     <>
@@ -39,7 +54,9 @@ const HomePage = () => {
                 <div className="bg-white rounded-xl shadow p-4">
                   <h2 className="font-bold text-lg mb-2">📈 Trending Tags</h2>
                   <div className="flex flex-wrap gap-2">
-                    {['React', 'TypeScript', 'Node.js', 'Python', 'JavaScript'].map(tag => (
+                    {allTags
+                    .slice(0, 5)
+                    .map(tag => (
                       <span key={tag} className="bg-gray-200 text-sm px-3 py-1 rounded-full">{tag}</span>
                     ))}
                   </div>
@@ -48,14 +65,14 @@ const HomePage = () => {
                   <h2 className="font-bold text-lg mb-2">📊 Community Stats</h2>
                   <div className="space-y-2">
                     <div className="flex justify-between">
-                      <span>Total Developers</span><span className="font-bold">1,234</span>
+                      <span>Total Developers</span><span className="font-bold">{userData.length}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Posts Today</span><span className="font-bold">42</span>
+                      <span>Posts Today</span><span className="font-bold">{usersPostedToday.size}</span>
                     </div>
-                    <div className="flex justify-between">
+                    {/* <div className="flex justify-between">
                       <span>Active Now</span><span className="font-bold">89</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </aside>

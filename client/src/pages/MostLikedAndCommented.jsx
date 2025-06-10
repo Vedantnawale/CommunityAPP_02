@@ -38,7 +38,7 @@ const MostLikedAndCommented = () => {
   };
 
   const renderPostCard = (post, type = "like") => (
-    <div className={`bg-white border-l-4 ${type === "like" ? "border-blue-500" : "border-green-500"} p-4 rounded-xl shadow space-y-3 hover:shadow-lg transition`}>
+    <div key={post._id} className={`bg-white border-l-4 ${type === "like" ? "border-blue-500" : "border-green-500"} p-4 rounded-xl shadow space-y-3 hover:shadow-lg transition`}>
       <div className="flex items-center gap-3">
         <img
           src={getAvatar(post.author)}
