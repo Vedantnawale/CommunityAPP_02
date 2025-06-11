@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createNewPost, getAllPosts } from "../redux/Slices/PostSlice";
+import toast from "react-hot-toast";
 
 const CreatePost = () => {
   const [postType, setPostType] = useState("update");
@@ -9,7 +10,10 @@ const CreatePost = () => {
   const dispatch = useDispatch();
 
   const handlePost = async () => {
-    if (!content.trim()) return;
+    if (!content.trim()) {
+      toast.error("Post content is required.");
+      return;
+    }
     const data = {
       content,
       postType,

@@ -101,9 +101,11 @@ const HomePage = () => {
               <div className="bg-white rounded-xl shadow p-4">
                 <h2 className="font-bold text-lg mb-2">📈 Trending Tags</h2>
                 <div className="flex flex-wrap gap-2">
-                  {['React', 'TypeScript', 'Node.js', 'Python', 'JavaScript'].map(tag => (
-                    <span key={tag} className="bg-gray-200 text-sm px-3 py-1 rounded-full">{tag}</span>
-                  ))}
+                  {allTags
+                    .slice(0, 5)
+                    .map(tag => (
+                      <span key={tag} className="bg-gray-200 text-sm px-3 py-1 rounded-full">{tag}</span>
+                    ))}
                 </div>
               </div>
 
